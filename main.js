@@ -46,6 +46,15 @@ const updateDisplay = (e) => {
   updateDisplayElement();
 };
 
+const handleDelete = () => {
+  if (currentValue === 0) return;
+  let value = currentValue.split("");
+  value.pop();
+  currentValue = value.length ? value.join() : 0;
+  displayValue = currentValue;
+  updateDisplayElement();
+};
+
 const updateDisplayElement = () => {
   const element = document.getElementById("display-value");
   element.textContent = displayValue;
@@ -114,6 +123,7 @@ const operators = Array.from(buttons).filter((button) =>
 const equals = document.getElementById("equals"); // Get equals button
 const clear = document.getElementById("clear"); // Get clear button
 const decimal = document.getElementById("decimal"); // Get decimal button
+const backspace = document.getElementById("delete"); // Get decimal button
 
 numbers.forEach((number) => {
   number.addEventListener("click", updateDisplay);
@@ -126,3 +136,4 @@ operators.forEach((operator) => {
 equals.addEventListener("click", handleOperation);
 clear.addEventListener("click", handleClear);
 decimal.addEventListener("click", handleDecimal);
+backspace.addEventListener("click", handleDelete);

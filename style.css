@@ -4,6 +4,10 @@
   --display-color: #a8dadc;
 }
 
+* {
+  font-family: "Roboto", Helvetica, sans-serif;
+}
+
 body {
   background-color: var(--background-color);
 }
@@ -26,6 +30,12 @@ button {
 
 .action-button {
   min-width: 166px;
+  background-color: #f77f00;
+  color: #f6f6f6;
+  text-transform: uppercase;
+}
+
+.delete-button {
   background-color: #e63946;
 }
 

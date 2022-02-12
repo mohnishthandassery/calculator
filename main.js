@@ -15,7 +15,6 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  console.log(operator);
   switch (operator) {
     case "add":
       return add(a, b);
@@ -75,7 +74,9 @@ const handleOperation = () => {
     Number(previousValue),
     Number(currentValue)
   );
-  displayValue = currentValue;
+  currentValue =
+    countDecimals(currentValue) > 3 ? currentValue.toFixed(3) : currentValue;
+  displayValue = currentValue; // Round answers with long decimals so that they don’t overflow the screen
   updateDisplayElement();
 };
 
@@ -86,6 +87,13 @@ const handleClear = () => {
   selectedOperator = "";
 
   updateDisplayElement();
+};
+
+const countDecimals = (value) => {
+  if (Math.floor(value) !== value) {
+    return value.toString().split(".")[1].length || 0;
+  }
+  return 0;
 };
 
 const buttons = document.querySelectorAll("button"); // Get all buttons

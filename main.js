@@ -38,9 +38,7 @@ let currentValue = 0;
 let displayValue = 0;
 let selectedOperator;
 
-const updateDisplay = (e) => {
-  const number = e.target.innerText;
-
+const updateDisplay = (number) => {
   currentValue === 0 ? (currentValue = number) : (currentValue += number);
   displayValue = currentValue;
   updateDisplayElement();
@@ -58,6 +56,11 @@ const handleDelete = () => {
 const updateDisplayElement = () => {
   const element = document.getElementById("display-value");
   element.textContent = displayValue;
+};
+
+const handleNumber = (e) => {
+  const number = e.target.innerText;
+  updateDisplay(number);
 };
 
 const handleOperatorClick = (e) => {
@@ -100,7 +103,33 @@ const handleClear = () => {
 
 const handleDecimal = (e) => {
   if (currentValue !== 0 && hasDecimals(currentValue) > 0) return;
-  updateDisplay(e);
+  handleNumber(e);
+};
+
+const handleKeydown = (e) => {
+  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const operators = ["+", "-", "*", "/"];
+  const operatorIds = {
+    "+": "add",
+    "-": "subtract",
+    "*": "multiply",
+    "/": "divide",
+  };
+  if (numbers.includes(e.key)) {
+    updateDisplay(e.key);
+  }
+  if (operators.includes(e.key)) {
+    handleOperatorClick({ target: { id: operatorIds[e.key] } });
+  }
+  if (e.key === "=" || e.key === "Enter") {
+    handleOperation();
+  }
+  if (e.key === ".") {
+    handleDecimal({ target: { innerText: e.key } });
+  }
+  if (e.key === "Backspace") {
+    handleDelete();
+  }
 };
 
 const countDecimals = (value) => {
@@ -123,10 +152,10 @@ const operators = Array.from(buttons).filter((button) =>
 const equals = document.getElementById("equals"); // Get equals button
 const clear = document.getElementById("clear"); // Get clear button
 const decimal = document.getElementById("decimal"); // Get decimal button
-const backspace = document.getElementById("delete"); // Get decimal button
+const backspace = document.getElementById("delete"); // Get delete button
 
 numbers.forEach((number) => {
-  number.addEventListener("click", updateDisplay);
+  number.addEventListener("click", handleNumber);
 });
 
 operators.forEach((operator) => {
@@ -137,3 +166,5 @@ equals.addEventListener("click", handleOperation);
 clear.addEventListener("click", handleClear);
 decimal.addEventListener("click", handleDecimal);
 backspace.addEventListener("click", handleDelete);
+
+document.addEventListener("keydown", handleKeydown);

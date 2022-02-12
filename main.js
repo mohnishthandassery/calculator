@@ -89,11 +89,20 @@ const handleClear = () => {
   updateDisplayElement();
 };
 
+const handleDecimal = (e) => {
+  if (currentValue !== 0 && hasDecimals(currentValue) > 0) return;
+  updateDisplay(e);
+};
+
 const countDecimals = (value) => {
   if (Math.floor(value) !== value) {
     return value.toString().split(".")[1].length || 0;
   }
   return 0;
+};
+
+const hasDecimals = (value) => {
+  return value.split("").filter((x) => x === ".").length;
 };
 
 const buttons = document.querySelectorAll("button"); // Get all buttons
@@ -104,6 +113,7 @@ const operators = Array.from(buttons).filter((button) =>
 ); // Get operator buttons
 const equals = document.getElementById("equals"); // Get equals button
 const clear = document.getElementById("clear"); // Get clear button
+const decimal = document.getElementById("decimal"); // Get decimal button
 
 numbers.forEach((number) => {
   number.addEventListener("click", updateDisplay);
@@ -115,3 +125,4 @@ operators.forEach((operator) => {
 
 equals.addEventListener("click", handleOperation);
 clear.addEventListener("click", handleClear);
+decimal.addEventListener("click", handleDecimal);

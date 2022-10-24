@@ -2,6 +2,9 @@
   --background-color: #f6f6f6;
   --calculator-color: #1d3557;
   --display-color: #a8dadc;
+  --action-color: #f77f00;
+  --delete-color: #e63946;
+  --hover-color: #457b9d;
 }
 
 * {
@@ -30,17 +33,18 @@ button {
 
 .action-button {
   min-width: 166px;
-  background-color: #f77f00;
+  background-color: var(--action-color);
   color: #f6f6f6;
   text-transform: uppercase;
 }
 
 .delete-button {
-  background-color: #e63946;
+  background-color: var(--delete-color);
 }
 
 button:hover {
-  background-color: #457b9d;
+  background-color: var(--hover-color);
+  color: var(--background-color);
 }
 
 .calculator {
@@ -64,4 +68,15 @@ button:hover {
   font-size: xx-large;
   float: right;
   margin: 0 8px 0 0;
+}
+
+@media only screen and (max-width: 400px) {
+  .action-button {
+    min-width: 152px;
+  }
+
+  button {
+    padding: 24px 24px;
+    min-width: 70px;
+  }
 }
